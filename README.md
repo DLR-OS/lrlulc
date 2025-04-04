@@ -2,16 +2,10 @@
 
 
 
-<div style="display: flex;  justify-content: space-around;">
-<div style="text-align: center;">
-<img src="doc/readme/heligoland_lulc_VBS4.png" alt="OpenStreetMap LULC image for Virtual Battlespace 4 (VBS4)" style="width: 98%; height: auto;"/>
-<p>OpenStreetMap LULC image for Virtual Battlespace 4 (VBS4)</p>    
-</div>    
-<div style="text-align: center;">    
-<img src="doc/readme/heligoland_scene_VBS4.jpg" alt="VBS4 landscape rendered from LULC image" style="width: 98%; height: auto;"/>
-<p>VBS4 landscape rendered from LULC image</p>
-</div>    
-</div>
+![Land use/land cover image of Heligoland/Germany rendered in Virtual Battlespace 4](doc/readme/heligoland_lulc_VBS4.jpg "Land use/land cover image of Heligoland/Germany rendered in Virtual Battlespace 4")
+
+<p style="text-align: center;">Land use/land cover image of Heligoland/Germany rendered in Virtual Battlespace 4</p>
+
 <sup>LULC map derived from: OpenStreetMap 2025, [openstreetmap.org/copyright]( openstreetmap.org/copyright), © [ESA WorldCover project](https://esa-worldcover.org/en) 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium</sup>
 
 This repository hosts the static data sets, scripts and binaries needed to create geographically referenced land use/land cover (LULC) bitmaps from OpenStreetMap vector maps as described in the following paper.
