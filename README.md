@@ -36,7 +36,7 @@ Please cite the above paper if you use any of the tools provided by this reposit
 
 * The names "OpenStreetMap", "OSM" and related wordmarks are a trademark of the [OpenStreetMap Foundation](https://osmfoundation.org). Neither the author(s) nor [DLR](https://www.dlr.de/en) are  endorsed by or affiliated with the OpenStreetMap Foundation.
 
-* High detail vector data is taken from [OpenStreetMap](https://www.openstreetmap.org), [openstreetmap.org/copyright]( openstreetmap.org/copyright).
+* High detail vector data and the water polygons are taken from [OpenStreetMap](https://www.openstreetmap.org), [openstreetmap.org/copyright]( openstreetmap.org/copyright).
 
 * The vectorized [WorldCover 2021](https://worldcover2021.esa.int/) base layer is *© ESA WorldCover project / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium*, but released under a [CC-BY](https://creativecommons.org/licenses/by/4.0) license. Please refer to their website and the following publication for technical details:
 

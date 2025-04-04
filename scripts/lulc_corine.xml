@@ -1,0 +1,1205 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!--                                                                      -->
+<!-- LULC style file based on the CORINE ( Coordination of Information    -->
+<!-- on the Environment) categories                                       -->
+<!--                                                                      -->
+<!-- (C) by Dirk 'jtk' Frommholz, DLR OS-SEC, Berlin                      -->
+<!--                                                                      -->
+<!-- This program is free software: you can redistribute it and/or modify -->
+<!-- it under the terms of the GNU General Public License as published by -->
+<!-- the Free Software Foundation, either version 2 of the License, or    -->
+<!-- (at your option) any later version.                                  -->
+<!--                                                                      -->
+<!-- This program is distributed in the hope that it will be useful,      -->
+<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of       -->
+<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        -->
+<!-- GNU General Public License for more details.                         -->
+<!--                                                                      -->
+<!-- You should have received a copy of the GNU General Public License    -->
+<!-- along with this program.  If not, see                                -->
+<!-- <https://www.gnu.org/licenses/>.                                     -->
+<!--                                                                      -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+<!DOCTYPE Map [
+
+    <!-- data source settings, resolutions, etc. -->
+    <!ENTITY % entities SYSTEM "entities.xml.inc">
+    %entities;
+
+    <!-- color encoding -->
+    <!ENTITY % colorMap SYSTEM "colormap_corine.xml.inc">
+    %colorMap;
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- Anything below is not to be altered by user !                        -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    <!-- antialiasing must be disabled for LULC -->
+    <!ENTITY polyGamma "0">
+    <!ENTITY strokeGamma "0">
+
+     <!-- line joins and ends -->
+    <!ENTITY defaultLineJoin "round">
+    <!ENTITY defaultLineCap "square">
+
+    <!-- abbreviations of rules etc. used multiple times -->
+    <!ENTITY roadsFilterTerms "
+        ([highway] = 'motorway' or [highway] = 'motorway_link' or
+         [highway] = 'trunk' or [highway] = 'trunk_link'  or
+         [highway] = 'primary' or [highway] = 'primary_link' or
+         [highway] = 'secondary' or [highway] = 'secondary_link' or
+         [highway] = 'tertiary' or [highway] = 'tertiary_link' or
+         [highway] = 'residential' or [highway] = 'bus_guideway' or
+         [highway] = 'busway' or [highway] = 'escape' or
+         [highway] = 'road' or [highway] = 'unclassified' or
+         highway = 'living_street' or [highway] = 'service')
+         and ([tunnel] = 'no' or [tunnel] = '')"
+    > 
+]>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- Map                                                                  -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<Map srs="&mapSrsID;" background-color="&defaultLC;" minimum-version="4.0.0">
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!--               Base layer                      -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- these are simplified CORINE styles to be used for the base layer -->
+    <!-- which does not have the other columns                            -->
+    <Style name="LULC_Base_ContinuousUrbanFabric">
+        <Rule>    
+            <Filter>
+                [landuse] = 'residential'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC1;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_MixedForest">
+        <Rule>    
+            <Filter>
+                [natural] = 'wood'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC25;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_NaturalGrasslands">
+        <Rule>
+            <Filter>
+                [natural] = 'grassland'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC26;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_SclerophyllousVegetation">    
+        <Rule>
+            <Filter>
+                [natural] = 'scrub'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC28;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_NonIrregatedArableLand">
+        <Rule>
+            <Filter>
+                [landuse] = 'farmland'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC12;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_BareRocks">    
+        <Rule>
+            <Filter>
+                [natural] = 'scree'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC31;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_GlaciersAndPerpetualSnow">
+        <Rule>
+            <Filter>
+                [natural] = 'glacier' 
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC34;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_SparselyVegetatedAreas">    
+        <Rule>
+            <Filter>
+                [natural] = 'tundra'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC32;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_MoorsAndHeathland">    
+        <Rule>
+            <Filter>
+                [natural] = 'wetland'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC27;" />
+        </Rule>
+    </Style>
+
+    <Style name="LULC_Base_WaterBodies">
+        <Rule>
+            <Filter>
+                [natural] = 'water'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC41;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #1 Continuous urban fabric                    -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_1_ContinuousUrbanFabric">
+        <Rule>    
+            <Filter>
+                [landuse] = 'residential' or [building] = 'appartments' or
+                [highway] = 'pedestrian' or [highway] = 'footway'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC1;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #2 Discontinuous urban fabric                 -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_2_DiscontinousUrbanFabric">
+        <Rule>
+            <!-- we use this class also for unspecified buildings -->
+            <Filter>
+                [building] = 'detached ' or
+                [building] = 'bungalow' or [building] = 'cabin' or
+                [building] = 'villa' or [building] = 'semidetached_house' 
+                or [building] = 'ger' or [building] = 'manor' or
+                [building] = 'trullo' or [building] = 'gate' or
+                [building] = 'gatehouse' or [building] = 'house' or 
+                [building] = 'yes'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC2;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #3 Industrial or commercial units or public   -->
+    <!-- facilities                                    -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_3_IndustrialCommercialUnits">
+        <Rule>
+            <Filter>
+                [landuse] = 'commercial' or [landuse] = 'retail' or
+                [amenity] = 'biergarten' or
+                [landuse] = 'industrial' and not ([industrial] = 'mine') or
+                [building] = 'industrial' or [building] = 'commercial' or
+                [building] = 'office' or [building] = 'kiosk' or
+                [building] = 'hotel' or [building] = 'supermarket' or 
+                [building] = 'warehouse' or [building] = 'digester' or 
+                [building] = 'service' or [building] = 'tech_cab' or 
+                [building] = 'transformer_tower' or 
+                [building] = 'water_tower' or [building] = 'storage_tank' or
+                [building] = 'silo' or [man_made] = 'wastewater_plant' or
+                [man_made] = 'pumping_station' or [man_made] = 'water_works' or
+                [man_made] = 'water_plant' or [man_made] = 'works' or 
+                [man_made] = 'windmill' or
+
+                [landuse] = 'institutional' or [building] = 'civic' or
+                [building] = 'embassy' or [building] = 'government' or
+                [building] = 'townhall' or
+
+                [power] = 'plant' or [power] = 'compensator' or
+                [power] = 'converter' or [power] = 'heliostat' or
+                [power] = 'substation' or [power] = 'switchgear' or
+                [power] = 'generator' or
+
+                [landuse] = 'education' or [building] = 'museum' or
+                [building] = 'library' or
+
+                [landuse] = 'military' or (not [military] = '') or
+                [building] = 'military' or
+
+                [amenity] = 'school' or [amenity] = 'college' or
+                [amenity] = 'university' or [amenity] = 'kindergarten' or
+                [amenity] = 'training' or [amenity] = 'police' or
+                [amenity] = 'fire' or [amenity] = 'hospital' or
+                [amenity] = 'clinic' or [building] = 'public' or
+
+                [landuse] = 'religious' or [amenity] = 'place_of_worship' or
+                [building] = 'cathedral' or [building] = 'chapel' or
+                [building] = 'church' or [building] = 'kingdom_hall' or
+                [building] = 'monastery' or [building] = 'mosque' or
+                [building] = 'presbytery' or [building] = 'shrine' or
+                [building] = 'synagogue' or [building] = 'temple'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC3;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #4 Road and rail networks and associated land -->
+    <!-- (linear features)                             -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_4_RoadRailNetworksAssociatedLand_Lines">
+
+        <!-- roads - use cleant width_m then lanes_total count to       -->
+        <!-- determine width in pixels                                  -->
+        <!--                                                            -->
+        <!-- as of the docs, lanes are defined as the total lane count  -->
+        <!-- (=sum of lanes per direction) - if no lanes indicated,     -->
+        <!-- assume two-directional traffic, i.e., two lanes            -->
+
+        <Rule>
+            <Filter>
+                &roadsFilterTerms; and [width_m] &gt; 0
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="[width_m]*&GSD;" stroke="&corineLC4;" />
+        </Rule>
+
+        <Rule>
+            <Filter>
+                &roadsFilterTerms; and ([width_m] = 0 and [lanes_total] &gt; 0)
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="[lanes_total]*&roadLaneWidth;*&GSD;" stroke="&corineLC4;" />
+        </Rule>
+
+        <Rule>
+            <Filter>
+                &roadsFilterTerms; and ([tunnel] = 'no' or [tunnel] = '') and
+                ([width_m] = 0 and [lanes_total] = 0)
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="2*&roadLaneWidth;*&GSD;" stroke="&corineLC4;" />
+        </Rule>
+
+        <!-- railway tracks - assume per-track modelling -->
+        <!-- do not account for light rails, subways etc. since these often run on roads -->
+        <Rule>
+            <Filter>
+                ([railway] = 'rail' or [railway] = 'funicular' ) and 
+                ([tunnel] = 'no' or [tunnel] = 'false' or [tunnel] = '')  </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="&GSD;*&railwayTrackWidth;" stroke="&corineLC4;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #4 Road and rail networks and associated land -->
+    <!-- (polygonal features)                          -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_4_RoadRailNetworksAssociatedLand_Poly">
+        <Rule>            
+            <Filter>
+                [landuse] = 'railway' or
+                [amenity] = 'parking' or [building] = 'carport' or
+                [building] = 'garage' or [building] = 'garages' or
+                [building] = 'train_station' or [building] = 'transportation'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC4;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #5 Port areas (line features)                -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_5_PortAreas_Lines">
+        <!-- assume piers to be one road lane wide if no width is given -->
+        <Rule>
+            <Filter>
+                [man_made] = 'pier' and [width_m] &gt; 0
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="[width_m]*&GSD;" stroke="&corineLC5;" />
+        </Rule>
+
+
+        <Rule>
+            <Filter>
+                [man_made] = 'pier' and [width_m] = 0
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="&roadLaneWidth;*&GSD;" stroke="&corineLC5;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #5 Port areas (polygon features)              -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_5_PortAreas_Poly">
+        <Rule>            
+            <Filter>
+                [landuse] = 'port' or [industrial] = 'port' or
+                [leisure] = 'marina' or [man_made] = 'pier'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC5;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #6 Airports (line features)                   -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_6_Airports_Lines">
+
+        <!-- take metric width if available -->
+        <Rule>
+            <Filter>
+                ([aeroway] = 'taxiway' or [aeroway] = 'stopway' or 
+                [aeroway] = 'parking_position' or [aeroway] = 'runway') and
+                [width_m] &gt; 0
+            </Filter>            
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="[width_m]*&GSD;" stroke="&corineLC6a;" />
+        </Rule>
+
+        <!-- else, assume runways are twice as wide as taxiways -->
+        <Rule>
+            <Filter>
+                ([aeroway] = 'taxiway' or [aeroway] = 'stopway' or 
+                [aeroway] = 'parking_position') and [width_m] = 0 
+            </Filter>            
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="&aerowayWidth;*&GSD;" stroke="&corineLC6a;" />
+        </Rule>
+
+        <Rule>
+            <Filter>
+                [aeroway] = 'runway' and [width_m] = 0 
+            </Filter>            
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="2*&aerowayWidth;*&GSD;" stroke="&corineLC6a;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #6 Airports (polygon features)                -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_6_Airports_Poly">
+        <Rule>            
+            <Filter>
+                [aeroway] = 'aerodrome' or [aeroway] = 'runway' or 
+                [aeroway] = 'airstrip' or [aeroway] = 'taxiway' or 
+                [aeroway] = 'apron' or [aeroway] = 'helipad' or
+                [aeroway] = 'terminal' or [aeroway] = 'hangar' or 
+                [aeroway] = 'spaceport' or [aeroway] = 'launchpad' or 
+                [aeroway] = 'landingpad' or [aeroway] = 'flame_tranch' or
+
+                [building] = 'airport'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC6;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #7 Mineral extraction sites                   -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_7_MineralExtractionSites">
+        <Rule>
+            <Filter>
+                [landuse] = 'industrial' and [industrial] = 'mine'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC7;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #8 Dump sites                                 -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_8_DumpSites">
+        <Rule>
+            <Filter>
+                [landuse] = 'landfill'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC8;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #9 Construction sites (line features)         -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_9_ConstructionSites_Lines">
+        <!-- assume two lances if not given, else respect lane count-->
+        <Rule>
+            <Filter>
+                [highway] = 'construction' and 
+                ([tunnel] = 'no' or [tunnel] = '') and [lanes_total] = 0
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="2*&roadLaneWidth;*&GSD;" stroke="&corineLC9;"/>
+        </Rule>
+
+        <Rule>
+            <Filter>
+                [highway] = 'construction' and 
+                ([tunnel] = 'no' or [tunnel] = '') and [lanes_total] &gt; 0
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="[lanes_total]*&roadLaneWidth;*&GSD;" stroke="&corineLC9;"/>
+        </Rule>
+
+        <Rule>
+            <Filter>
+                [railway] = 'construction' and 
+                ([tunnel] = 'no' or [tunnel] = 'false' or [tunnel] = '')  
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="&GSD;*&railwayTrackWidth;" stroke="&corineLC9;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #9 Construction sites (polygon features)      -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_9_ConstructionSites_Poly">
+        <Rule>
+            <Filter>
+                [landuse] = 'construction' or [building] = 'construction'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC9;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #10 Green urban areas                         -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_10_GreenUrbanAreas">
+        <Rule>
+            <Filter>
+                [landuse] = 'meadow' or [landuse] = 'grass' or 
+                [leisure] = 'park' or [landuse] = 'cemetery' or
+                [leisure] = 'garden' 
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC10;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #11 Recreational areas                        -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_11_RecreationalAreas">
+        <Rule>
+            <Filter>
+                [landuse] = 'recreation_ground' or [landuse] = 'sports_centre' or
+                [surface] = 'tartan' or
+                [surface] = 'artificial_turf' or [surface] = 'acrylic' or
+                [surface] = 'carpet' or [surface] = 'plastic' or
+                [building] = 'grandstand' or [building] = 'pavillon' or
+                [building] = 'riding_hall' or [building] = 'sports_hall' or
+                [building] = 'sports_centre' or [building] = 'stadium' or
+
+                [leisure] = 'bathing_place' or [leisure] = 'dog_park' or
+                [leisure] = 'firepit' or [leisure] = 'fitness_station' or
+                [leisure] = 'pitch' or [leisure] = 'playground' or
+                [leisure] = 'track' or [leisure] = 'water_park' or
+                [leisure] = 'swimming_pool' or [leisure] = 'stadium' or
+                [leisure] = 'sports_centre' or [leisure] = 'camp_site' or
+                [leisure] = 'ice_rink' or [leisure] = 'golf_course' or
+                [leisure] = 'foot_bath' or 
+
+                [tourism] = 'theme_park' or [tourism] = 'zoo' or
+                [amenity] = 'festival_grounds'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC11;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #12 Non-irrigated arable land                 -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_12_NonIrregatedArableLand">
+        <Rule>
+            <Filter>
+                [landuse] = 'brownfield' or [landuse] = 'farmland' or 
+                [landuse] = 'farmyard' or [landuse] = 'quarry'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC12;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #13 Permanantly irregated land                -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_13_PermanentlyIrregatedLand">
+        <Rule>
+            <Filter>
+                [landuse] = 'garden' or [landuse] = 'plant_nursery'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC13;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #14 Rice fields                               -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_14_RiceFields">
+        <Rule>
+            <Filter>
+                [landuse] = 'paddy'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC14;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #15 Vineyards                                 -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_15_Vineyards">
+        <Rule>
+            <Filter>
+                [landuse] = 'vineyard'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC15;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #16 Fruit trees and berry plantations         -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_16_FruitTreesAndBerryPlantations">
+        <Rule>
+            <Filter>
+                [landuse] = 'orchard'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC15;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #17 Olive groves                              -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_17_OliveGroves">
+        <Rule>
+            <Filter>
+                [landuse] = 'orchard' and [trees] = 'olive_trees'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC17;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #18 Pastures                                  -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_18_Pastures">
+        <Rule>
+            <Filter>
+                [landuse] = 'meadow' and ([meadow] = 'pasture' or 
+                [meadow] = 'agricultural' or [meadow] = 'paddock')
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC18;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #20 Complex cultivation patterns              -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_20_ComplexCultivationPatterns">
+        <Rule>
+            <Filter>
+                [landuse] = 'allotments' 
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC20;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #23 Broad-leaved forest                       -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_23_BroadlevedForest">
+        <Rule>
+            <Filter>
+                [landuse] = 'forest' or [natural] = 'wood'
+                and ([leaf_cycle] = 'deciduous' or [leaf_type] = 'broadleaved')
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC23;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #24 Coniferous forest                         -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_24_ConiferousForest">
+        <Rule>
+            <Filter>
+                [landuse] = 'forest' or [natural] = 'wood'
+                and ([leaf_cycle] = 'evergreen' or [leaf_type] = 'needleleaved')
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC24;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #25 Mixed forest                              -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_25_MixedForest">
+        <!-- also use this class for unspecified forests -->
+        <!-- so render before more specialized forests -->
+        <Rule>
+            <Filter>
+                [landuse] = 'forest' or [natural] = 'wood' or
+                [landcover] = 'trees'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC25;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #26 Natural grasslands                        -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_26_NaturalGrasslands">
+        <Rule>
+            <Filter>
+                [natural] = 'grassland' or [surface] = 'grass' or
+                [landcover] = 'grass' 
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC26;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #27 Moors and heathland                       -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_27_MoorsAndHeathland">    
+        <Rule>
+            <Filter>
+                [natural] = 'heath' or [natural] = 'wetland'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC27;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #28 Sclerophyllous vegetation                 -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_28_SclerophyllousVegetation">    
+        <Rule>
+            <Filter>
+                [natural] = 'scrub'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC28;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #30 Beaches, dunes, sands                      -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_30_BeachesDunesSands">    
+        <Rule>
+            <Filter>
+                [natural] = 'beach' or [natural] = 'sand' or
+                [landcover] = 'dunes'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC30;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #31 Bare rocks                                -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_31_BareRocks">    
+        <Rule>
+            <Filter>
+                [natural] = 'rock' or [natural] = 'scree' or 
+                [natural] = 'shingle' or [natural] = 'bare_rock' or
+                [natural] = 'blockfield'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC31;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #32 Sparsely vegetated areas                  -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_32_SparselyVegetatedAreas">    
+        <Rule>
+            <Filter>
+                [natural] = 'tundra'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC32;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #34 Glaciers and perpetual snow               -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_34_GlaciersAndPerpetualSnow">
+        <Rule>
+            <Filter>
+                [natural] = 'glacier' or [surface] = 'snow' or
+                [surface] = 'ice'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC34;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #35 Inland marshes                            -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_35_InlandMarshes">
+        <Rule>
+            <Filter>
+                [natural] = 'wetland' and [wetland] = 'marsh'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC35;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #36 Peat bogs                                 -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_36_PeatBogs">
+        <Rule>
+            <Filter>
+                [natural] = 'wetland' and [wetland] = 'bog'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC36;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #37 Salt mashes                               -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_37_SaltMarshes">
+        <Rule>
+            <Filter>
+                [natural] = 'wetland' and [wetland] = 'saltmarsh'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC37;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #38 Salines                                   -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_38_Salines">
+        <Rule>
+            <Filter>
+                [landuse] = 'salt_pond'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC38;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #39 Intertidal flats                         -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_39_IntertidalFlats">
+        <Rule>
+            <Filter>
+                [wetland] = 'tidalflat'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC39;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #40 Water courses                             -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+    <Style name="LULC_Corine_40_WaterCourses">
+
+        <!-- take metric width if available (rare), else use single pixel stroke -->
+        <Rule>
+            <Filter>
+                ([waterway]='riverbank' or [waterway]='canal' or 
+                [waterway]='river' or [waterway]='drain' or 
+                [waterway]='stream') and [width_m] &gt; 0
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="[width_m]*&GSD;" stroke="&corineLC40;" />
+        </Rule>
+
+        <Rule>
+            <Filter>
+                ([waterway]='riverbank' or [waterway]='canal' or 
+                [waterway]='river' or [waterway]='drain' or 
+                [waterway]='stream') and [width_m] = 0
+            </Filter>
+            <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
+            stroke-gamma="&strokeGamma;" stroke-width="1" stroke="&corineLC40;" />
+        </Rule>
+
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #41 Water bodies                              -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_41_WaterBodies">
+        <Rule>
+            <Filter>
+                [natural] = 'water' or [water] = 'lake' or 
+                [water] = 'pond' or [water] = 'reservoir' or
+                [water] = 'moat'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC41;" />
+        </Rule>
+    </Style>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- #42 Coastal lagoons                           -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Style name="LULC_Corine_42_CoastalLagoons">
+        <Rule>
+            <Filter>
+                [natural] = 'water' and [water] = 'lagoon'
+            </Filter>
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC42;" />
+        </Rule>
+    </Style>
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- Layers, in order of rendering (first painted first)                  -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+    <!-- adapt this if the baselayer mapping to OSM classes changes -->
+    <Layer name="baselayer" srs="&layerSrsID;">
+        <StyleName>LULC_Base_NaturalGrasslands</StyleName>
+        <StyleName>LULC_Base_MixedForest</StyleName>
+        <StyleName>LULC_Base_SclerophyllousVegetation</StyleName>
+        <StyleName>LULC_Base_NonIrregatedArableLand</StyleName>
+        <StyleName>LULC_Base_BareRocks</StyleName>
+        <StyleName>LULC_Base_GlaciersAndPerpetualSnow</StyleName>
+        <StyleName>LULC_Base_SparselyVegetatedAreas</StyleName>
+        <StyleName>LULC_Base_MoorsAndHeathland</StyleName>
+        <StyleName>LULC_Base_WaterBodies</StyleName>
+        <StyleName>LULC_Base_ContinuousUrbanFabric</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons_baselayer</Parameter>
+            </Datasource>
+    </Layer>
+
+    <!-- sea water polygons, will cover extended base layer -->
+    <Layer name="oceanlayer" srs="&layerSrsID;">
+        <StyleName>LULC_Base_WaterBodies</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons_water</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- OSM CORINE layers start here -->
+    <!-- TEST: draw landscape elements, then man-made -->
+
+    <!-- greenlands -->
+    <Layer name="layer12" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_12_NonIrregatedArableLand</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer13" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_13_PermanentlyIrregatedLand</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer14" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_14_RiceFields</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer15" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_15_Vineyards</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer15" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_15_Vineyards</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer16" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_16_FruitTreesAndBerryPlantations</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer17" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_17_OliveGroves</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer18" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_18_Pastures</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer20" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_20_ComplexCultivationPatterns</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer26" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_26_NaturalGrasslands</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer27" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_27_MoorsAndHeathland</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer28" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_28_SclerophyllousVegetation</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer10" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_10_GreenUrbanAreas</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- beaches -->
+    <Layer name="layer30" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_30_BeachesDunesSands</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- rock, tundra -->
+    <Layer name="layer31" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_31_BareRocks</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer32" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_32_SparselyVegetatedAreas</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- Icy areas, marshes etc- -->
+    <Layer name="layer34_35_36_38" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_34_GlaciersAndPerpetualSnow</StyleName>
+        <StyleName>LULC_Corine_35_InlandMarshes</StyleName>
+        <StyleName>LULC_Corine_36_PeatBogs</StyleName>
+        <StyleName>LULC_Corine_37_SaltMarshes</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer38" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_38_Salines</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer39" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_39_IntertidalFlats</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- forests -->
+    <!-- unspecified/mixed forests are to be overwritten by specialized flavors -->
+    <Layer name="layer25" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_25_MixedForest</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer23" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_23_BroadlevedForest</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer24" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_24_ConiferousForest</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer1" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_1_ContinuousUrbanFabric</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+            </Datasource>
+    </Layer>
+
+    <Layer name="layer2" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_2_DiscontinousUrbanFabric</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer3" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_3_IndustrialCommercialUnits</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+            </Datasource>
+    </Layer>
+
+    <Layer name="layer4poly" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_4_RoadRailNetworksAssociatedLand_Poly</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- must come after industrial due to dual-tagging requirement-->
+    <Layer name="layer5poly" srs="&layerSrsID;">    
+        <StyleName>LULC_Corine_5_PortAreas_Poly</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer6poly" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_6_Airports_Poly</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer7" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_7_MineralExtractionSites</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+            </Datasource>
+    </Layer>
+
+    <Layer name="layer8" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_8_DumpSites</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+            </Datasource>
+    </Layer>
+
+    <Layer name="layer9poly" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_9_ConstructionSites_Poly</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer11" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_11_RecreationalAreas</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- Cover water courses by water bodies -->
+    <Layer name="layer40" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_40_WaterCourses</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">lines</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer41" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_41_WaterBodies</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="layer42" srs="&layerSrsID;">
+        <StyleName>LULC_Corine_42_CoastalLagoons</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <Parameter name="layer">multipolygons</Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- lines come last -->
+    <Layer name="layer4_5_6_lines" srs="&layerSrsID;" group-by="z_order">
+        <StyleName>LULC_Corine_4_RoadRailNetworksAssociatedLand_Lines</StyleName>        
+        <StyleName>LULC_Corine_5_PortAreas_Lines</StyleName>
+        <StyleName>LULC_Corine_6_Airports_Lines</StyleName>
+        <StyleName>LULC_Corine_9_ConstructionSites_Lines</StyleName>
+        <Datasource>
+            &datasourceSettings;
+            <!-- draw in ascending z_order, i.e., elevated roads last -->
+            <Parameter name="layer_by_sql">
+                select * from lines order by z_order
+            </Parameter>
+        </Datasource>
+    </Layer>
+</Map>

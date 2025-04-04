@@ -1,0 +1,6 @@
+<!-- Datasource settings to be used for layers -->
+
+<Parameter name="file">2024_06_25_berlin-latest.gpkg</Parameter>
+<Parameter name="type">ogr</Parameter>
+<Parameter name="encoding">utf-8</Parameter>
+
