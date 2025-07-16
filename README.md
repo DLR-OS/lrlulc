@@ -8,11 +8,13 @@
 
 <sup>LULC map derived from: OpenStreetMap 2025, [openstreetmap.org/copyright]( openstreetmap.org/copyright), © [ESA WorldCover project](https://esa-worldcover.org/en) 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium</sup>
 
-This repository hosts the static data sets, scripts and binaries needed to create geographically referenced land use/land cover (LULC) bitmaps from OpenStreetMap vector maps as described in the following paper.
+This repository hosts the static data sets, scripts and binaries needed to create geographically referenced land use/land cover (LULC) bitmaps from OpenStreetMap vector maps as described in the following paper:
 
-(paper link will be added after publication on or after April 5th, 2025)
+Frommholz, D.: **Locally rendered high-resolution Land Use/Land Cover Bitmaps from OpenStreetMap Data for geospecific 3D Simulation**, ISPRS  Ann. Photogramm. Remote Sens. Spatial Inf. Sci., X-G-2025, 269–276,  https://doi.org/10.5194/isprs-annals-X-G-2025-269-2025, 2025.
 
-Please cite the above paper if you use any of the tools provided by this repository in a scientific context.<br>
+**Please cite the above paper** if you use any of the tools provided by this repository in a scientific context.<br>
+
+
 
 ## 1. Licenses ##
 
