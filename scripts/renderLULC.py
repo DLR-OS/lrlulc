@@ -154,13 +154,19 @@ def checkToolchain(args):
         sys.exit(1)
 
     # check plugins path if given
-    # check common places if not (Linux only)
-    mrOgrInput='ogr.input'        
+    # check common places if not (Linux only)    
+
+    # the names of usable ogr plugins, depends on Mapnik version
+    mrOgrInputs=['ogr.input', 'gdal+ogr.input'];
+
     if args.mapnik_plugins:
-        if os.path.exists(os.path.join(args.mapnik_plugins, mrOgrInput)) and \
-        os.access(os.path.join(args.mapnik_plugins, mrOgrInput), os.X_OK):
+        inputPluginsExist=[f for f in mrOgrInputs if os.path.exists(os.path.\
+        join(args.mapnik_plugins, f)) and os.access(os.path.join(args.\
+        mapnik_plugins, f), os.X_OK)];
+
+        if len(inputPluginsExist) > 0:
             print('Manually specified Mapnik plugins under', 
-            args.mapnik_plugins, 'look usable')
+            args.mapnik_plugins, 'look usable, found ', inputPluginsExist)
         else: 
             print('Cannot find and/or access Mapnik plugins under', 
             args.mapnik_plugins)
@@ -169,8 +175,12 @@ def checkToolchain(args):
 
         for pluginPathCandidate in ['/usr/lib64/mapnik/input', 
         '/usr/lib/mapnik/input', '/lib64/mapnik/input', '/lib/mapnik/input']:
-            if os.path.exists(os.path.join(pluginPathCandidate, mrOgrInput)) and \
-            os.access(os.path.join(pluginPathCandidate, mrOgrInput), os.X_OK):
+
+            inputPluginsExist=[f for f in mrOgrInputs if os.path.exists(os.path.\
+            join(pluginPathCandidate, f)) and os.access(os.path.join(pluginPathCandidate, \
+            f), os.X_OK)]
+
+            if len(inputPluginsExist) > 0:
                 args.mapnik_plugins=pluginPathCandidate                
                 break
         

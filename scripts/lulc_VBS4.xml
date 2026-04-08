@@ -55,7 +55,7 @@
          [highway] = 'residential' or [highway] = 'bus_guideway' or
          [highway] = 'busway' or [highway] = 'escape' or
          [highway] = 'road' or [highway] = 'unclassified' or
-         highway = 'living_street' or [highway] = 'service')
+         [highway] = 'living_street' or [highway] = 'service')
          and ([tunnel] = 'no' or [tunnel] = '')"
     > 
 ]>
