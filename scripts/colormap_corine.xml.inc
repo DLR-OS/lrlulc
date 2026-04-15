@@ -38,7 +38,7 @@
 <!-- #15 Vineyards -->
 <!ENTITY corineLC15 "#e68000">
 <!-- #16 Fruit trees and berry plantations -->
-<!ENTITY corineLC16 "#e68000">
+<!ENTITY corineLC16 "#f2a64d">
 <!-- #17 Olive groves -->
 <!ENTITY corineLC17 "#e6a600">
 <!-- #18 Pastures -->
@@ -63,6 +63,8 @@
 <!ENTITY corineLC27 "#a6ff80">
 <!-- #28 Sclerophyllous vegetation -->
 <!ENTITY corineLC28 "#a6e64d">
+<!-- #29 Transitional woodland-shrub (unused) -->
+<!ENTITY corineLC29 "#a6f200">
 <!-- #30 Beaches, dunes, sands -->
 <!ENTITY corineLC30 "#e6e6e6">
 <!-- #31 Bare rocks -->
