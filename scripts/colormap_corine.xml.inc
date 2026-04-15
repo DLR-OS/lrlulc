@@ -31,25 +31,25 @@
 <!ENTITY corineLC11 "#ffe6ff">
 <!-- #12 Non-irrigated arable land -->
 <!ENTITY corineLC12 "#ffffa8">
-<!-- #13 - Permanently irrigated land -->
+<!-- #13 Permanently irrigated land -->
 <!ENTITY corineLC13 "#ffff00">
-<!-- #14 - Rice fields -->
+<!-- #14 Rice fields -->
 <!ENTITY corineLC14 "#e6e600">
-<!-- #15 - Vineyards -->
+<!-- #15 Vineyards -->
 <!ENTITY corineLC15 "#e68000">
-<!-- #16 - Fruit trees and berry plantations -->
+<!-- #16 Fruit trees and berry plantations -->
 <!ENTITY corineLC16 "#e68000">
-<!-- #17 - Olive groves -->
+<!-- #17 Olive groves -->
 <!ENTITY corineLC17 "#e6a600">
-<!-- #18 - Pastures -->
+<!-- #18 Pastures -->
 <!ENTITY corineLC18 "#e6e64d">
-<!-- #19 - Annual crops associated with permanent crops (currently unused) -->
+<!-- #19 Annual crops associated with permanent crops (currently unused) -->
 <!ENTITY corineLC19 "#ffe6a6">
-<!-- #20 - Complex cultivation patterns -->
+<!-- #20 Complex cultivation patterns -->
 <!ENTITY corineLC20 "#ffe64d">
-<!-- #21 - Land principally occupied by agriculture with significant areas of natural vegetation (currently unused) -->
+<!-- #21 Land principally occupied by agriculture with significant areas of natural vegetation (currently unused) -->
 <!ENTITY corineLC21 "#e6cc4d">
-<!-- #22 - Agro-forestry areas (unused) -->
+<!-- #22 Agro-forestry areas (unused) -->
 <!ENTITY corineLC22 "#f2cca6">
 <!-- #23 Broad-leaved forest -->
 <!ENTITY corineLC23 "#80ff00">
@@ -89,7 +89,7 @@
 <!ENTITY corineLC41 "#80f2e6">
 <!-- #42 Coastal lagoons -->
 <!ENTITY corineLC42 "#00ffa6">
-<!-- #43  Estuaries (unused) -->
+<!-- #43 Estuaries (unused) -->
 <!ENTITY corineLC43 "#a6ffe6">
 <!-- #44 Sea and ocean -->
 <!ENTITY corineLC44 "#e6f2ff">

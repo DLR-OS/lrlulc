@@ -161,7 +161,7 @@
             <Filter>
                 [natural] = 'water'
             </Filter>
-            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC41;" />
+            <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC44;" />
         </Rule>
     </Style>
 
@@ -816,9 +816,11 @@
         <!-- take metric width if available (rare), else use single pixel stroke -->
         <Rule>
             <Filter>
-                ([waterway]='riverbank' or [waterway]='canal' or 
-                [waterway]='river' or [waterway]='drain' or 
-                [waterway]='stream') and [width_m] &gt; 0
+				([water] = 'stream' or [water] = 'stream_pool' or [water] = 'river' or
+				[water] = 'lock' or [water] = 'rapids' or [water] = 'fish_pass' or
+				[waterway]='riverbank' or [waterway]='canal' or
+				[waterway]='river' or [waterway]='drain' or
+				[waterway]='stream') and [width_m] &gt; 0
             </Filter>
             <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
             stroke-gamma="&strokeGamma;" stroke-width="[width_m]*&GSD;" stroke="&corineLC40;" />
@@ -826,10 +828,12 @@
 
         <Rule>
             <Filter>
-                ([waterway]='riverbank' or [waterway]='canal' or 
-                [waterway]='river' or [waterway]='drain' or 
-                [waterway]='stream') and [width_m] = 0
-            </Filter>
+				([water] = 'stream' or [water] = 'stream_pool' or [water] = 'river' or
+				[water] = 'lock' or [water] = 'rapids' or [water] = 'fish_pass' or
+				[waterway]='riverbank' or [waterway]='canal' or
+				[waterway]='river' or [waterway]='drain' or
+				[waterway]='stream') and [width_m] = 0
+			</Filter>
             <LineSymbolizer stroke-linecap="&defaultLineCap;" stroke-linejoin="&defaultLineJoin;"
             stroke-gamma="&strokeGamma;" stroke-width="1" stroke="&corineLC40;" />
         </Rule>
@@ -842,10 +846,10 @@
     <Style name="LULC_Corine_41_WaterBodies">
         <Rule>
             <Filter>
-                [natural] = 'water' or [water] = 'lake' or 
-                [water] = 'pond' or [water] = 'reservoir' or
-                [water] = 'moat'
-            </Filter>
+				[water] = 'lake' or [water] = 'oxbow' or
+				[water] = 'pond' or [water] = 'reservoir' or
+				[water] = 'moat' or [water] = 'cenote' or [water] = 'basin'
+			</Filter>
             <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC41;" />
         </Rule>
     </Style>
@@ -1187,7 +1191,7 @@
             <Parameter name="layer">multipolygons</Parameter>
         </Datasource>
     </Layer>
-
+	
     <!-- lines come last -->
     <Layer name="layer4_5_6_lines" srs="&layerSrsID;" group-by="z_order">
         <StyleName>LULC_Corine_4_RoadRailNetworksAssociatedLand_Lines</StyleName>        
