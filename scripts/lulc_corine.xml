@@ -171,7 +171,7 @@
     <Style name="LULC_Corine_1_ContinuousUrbanFabric">
         <Rule>    
             <Filter>
-                [landuse] = 'residential' or [building] = 'appartments' or
+                [landuse] = 'residential' or [building] = 'apartments' or
                 [highway] = 'pedestrian' or [highway] = 'footway'
             </Filter>
             <PolygonSymbolizer gamma="&polyGamma;" fill="&corineLC1;" />
@@ -846,6 +846,9 @@
     <Style name="LULC_Corine_41_WaterBodies">
         <Rule>
             <Filter>
+				<!-- needed here, or rivers may show up wrongly -->
+				[natural] = 'water' or 
+				
 				[water] = 'lake' or [water] = 'oxbow' or
 				[water] = 'pond' or [water] = 'reservoir' or
 				[water] = 'moat' or [water] = 'cenote' or [water] = 'basin'
